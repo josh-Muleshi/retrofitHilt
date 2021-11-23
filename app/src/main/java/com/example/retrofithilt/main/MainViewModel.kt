@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.retrofithilt.data.models.CommentResponse
 import com.example.retrofithilt.util.DispatcherProvider
 import com.example.retrofithilt.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,7 @@ class MainViewModel @Inject constructor(
     private val repository: MainRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel(){
-    /*sealed class CurrencyComment{
+    sealed class CurrencyComment{
         class Success(val resultText: String): CurrencyComment()
         class Failure(val errorText: String): CurrencyComment()
         object Loading: CurrencyComment()
@@ -37,16 +38,16 @@ class MainViewModel @Inject constructor(
                 is Resource.Error -> _conversion.value = CurrencyComment.Failure(commentsResponse.message!!)
                 is Resource.Success -> {
                     val c = commentsResponse.data
-                    _conversion.value = c
+                    _conversion.value =
                 }
             }
         }
-    }*/
+    }
 
     private lateinit var job: Job
 
-    private val _comments = MutableLiveData<List<Comment>>()
-    val comments : LiveData<List<Comment>>
+    private val _comments = MutableLiveData<List<CommentResponse>>()
+    val comments : LiveData<List<CommentResponse>>
         get() = _comments
 
     suspend fun getComments(){
